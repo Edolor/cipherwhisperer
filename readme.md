@@ -31,7 +31,7 @@ The project features a range of decryptors, including:
 1. Clone this repository.
 2. Create a virtual environment.
 3. Install the required libraries: `pip install -r requirements.txt`
-4. Create a `.env` file with your environment variables (e.g. API keys) follow the `.env.example` file
+4. Create a `.env` file with your environment variables (i.e. API keys) following the `.env.example` file
 
 ### Running the Code
 
