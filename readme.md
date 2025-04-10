@@ -1,5 +1,4 @@
 # Cipher Whisperer
-================
 
 ## Overview
 --------
