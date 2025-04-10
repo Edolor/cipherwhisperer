@@ -1,12 +1,10 @@
 # Cipher Whisperer
 
 ## Overview
---------
 
 Cipher Whisperer is a software project that aims to decrypt and analyze cipher texts using a graph-based approach. The project utilizes various software libraries and tools to process and transform the input text.
 
 ## Software and Libraries Used
------------------------------
 
 * Python 3.x as the primary programming language
 * `dotenv` for environment variable management
@@ -15,7 +13,6 @@ Cipher Whisperer is a software project that aims to decrypt and analyze cipher t
 * `pydantic` for data validation and parsing
 
 ## Decryptors
--------------
 
 The project features a range of decryptors, including:
 
@@ -23,7 +20,6 @@ The project features a range of decryptors, including:
 * Other decryptors (to be added in future updates)
 
 ## Getting Started
----------------
 
 ### Prerequisites
 
@@ -43,7 +39,6 @@ The project features a range of decryptors, including:
 2. Follow the prompts to input a cipher text and receive the decrypted output
 
 ## Project Structure
------------------
 
 * `cipherwhisperer/`: main project directory
 	+ `main.py`: entry point for the project
@@ -54,12 +49,10 @@ The project features a range of decryptors, including:
 	+ `.gitignore`: ignore file for Git
 
 ## Contributing
-------------
 
 Contributions are welcome! Please submit a pull request with your changes and a brief description of what you've added or fixed.
 
 ## License
--------
 
 This project is licensed under the MIT License. See `LICENSE` for details.
 
