@@ -6,7 +6,7 @@ Cipher Whisperer is a software project that aims to decrypt and analyze cipher t
 
 ## Software and Libraries Used
 
-* Python 3.x as the primary programming language
+* Python 3 as the primary programming language
 * `dotenv` for environment variable management
 * `langgraph` for graph-based processing and transformation
 * `langchain_core` and `langchain_openai` for natural language processing and AI-powered decryption
