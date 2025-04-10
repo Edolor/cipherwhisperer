@@ -4,6 +4,7 @@
 
 Cipher Whisperer is a software project that aims to decrypt and analyze cipher texts using a graph-based approach. The project utilizes various software libraries and tools to process and transform the input text.
 
+Graph Architecture:
 ![Graph Architecture](architecture.png)
 
 ## Software and Libraries Used
