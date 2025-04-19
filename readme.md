@@ -4,8 +4,10 @@
 
 Cipher Whisperer is a software project that aims to decrypt and analyze cipher texts using a graph-based approach. The project utilizes various software libraries and tools to process and transform the input text.
 
-Graph Architecture above.
+Graph Architecture:
 ![Graph Architecture](architecture.png)
+
+The system takes in a text, extracts a single cipher text block from it and detects what suspected ciphers it matches with a probability of above 70% confidence level. Lastly the system calls the respective decryptors on the cipher text in an attempt to decrypt it correctly. 
 
 ## Software and Libraries Used
 
@@ -19,8 +21,16 @@ Graph Architecture above.
 
 The project features a range of decryptors, including:
 
-* BruteForceDecryptor: a brute-force decryptor that uses a list of English words to decrypt Caesar ciphers
+* BruteForceDecryptor: a brute-force decryptor that uses a list of English words to decrypt the follow ciphers: Caesar, Atbash, Affine, Bacon, Transposition
 * Other decryptors (to be added in future updates)
+
+Sample run:
+![Sample run](sample-run.png)
+
+Future work include:
+
+* Adding a reflection component to the system that analyzes the output after the first run and tries again.
+* Adding the ability to extract multiple cipher text blocks from a given text.
 
 ## Getting Started
 

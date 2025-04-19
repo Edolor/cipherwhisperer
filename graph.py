@@ -3,19 +3,20 @@ load_dotenv()
 
 from langgraph.graph import END, StateGraph
 from chains import decipher_prompt
-from typing import TypedDict, Dict, Any
+from typing import TypedDict, Dict, Any, List
 from decryptors import BruteForceDecryptor
 from models import Ciphers
 
-DETECT_CIPHER = "detect_cipher"
+DETECT_CIPHER = "detect_ciphers"
 DECRYPTOR = "decryptor"
 
 
 class GraphState(TypedDict):
     """The state of the graph."""
     question: str
-    cipher: str
-    decrypted_cipher: str
+    decrypted_ciphers: List[str]
+    suspected_ciphers: List[str]
+    probabilities: List[float]
 
 
 def run_decryptor(state: GraphState) -> Dict[str, Any]:
@@ -23,17 +24,34 @@ def run_decryptor(state: GraphState) -> Dict[str, Any]:
 
     print("--RUN DECRYPTOR--")
 
-    cipher = state["cipher"]
+    suspected_ciphers = state["suspected_ciphers"]
 
-    print("--DECRYPTOR: " + cipher + "--")
+    print("--DECRYPTOR: ", suspected_ciphers, "--")
 
-    if state["cipher"] == Ciphers.caesar:
-        _, decrypted_cipher = BruteForceDecryptor.caesar_brute_force(
-            state["question"])
-    else:
-        decrypted_cipher = "Unsupported cipher"
+    decrypted_ciphers = []
 
-    return {"question": state["question"], "cipher": cipher, "decrypted_cipher": decrypted_cipher}
+    for cipher in suspected_ciphers:
+        if cipher == Ciphers.caesar:
+            _, decrypted_cipher = BruteForceDecryptor.caesar_brute_force(
+                state["question"])
+        elif cipher == Ciphers.atbash:
+            decrypted_cipher = BruteForceDecryptor.atbash_brute_force(
+                state["question"])
+        elif cipher == Ciphers.affine:
+            decrypted_cipher = BruteForceDecryptor.affine_brute_force(
+                state["question"])
+        elif cipher == Ciphers.bacon:
+            decrypted_cipher = BruteForceDecryptor.bacon_decrypt(
+                state["question"])
+        elif cipher == Ciphers.transposition:
+            decrypted_cipher = BruteForceDecryptor.transposition_brute_force(
+                state["question"])
+        else:
+            decrypted_cipher = "Unsupported cipher"
+
+        decrypted_ciphers.append(decrypted_cipher)
+
+    return {"question": state["question"], "suspected_ciphers": suspected_ciphers, "decrypted_ciphers": decrypted_ciphers, "probabilities": state["probabilities"]}
 
 
 def get_cipher_type(state: GraphState) -> Dict[str, Any]:
@@ -46,18 +64,18 @@ def get_cipher_type(state: GraphState) -> Dict[str, Any]:
     response = decipher_prompt.invoke({"question": question})
 
     # Getting type of cipher
-    cipher = Ciphers.caesar if response.cipher == Ciphers.caesar else "unknown"
+    suspected_ciphers = response.suspected_ciphers
     
-    if cipher == Ciphers.caesar: # If cipher is know then extract cipher from only cipher text
+    if Ciphers.unknown not in response.suspected_ciphers: # If cipher is not unknown
         question = response.new_question
 
-    return {"question": question, "cipher": cipher, "decrypted_cipher": ""}
+    return {"question": question, "decrypted_cipher": "", "suspected_ciphers": suspected_ciphers, "probabilities": response.probabilities}
 
 
 def decide_to_decrypt(state):
     """Decides whether to decrypt or not."""
 
-    if state["cipher"] == "unknown":  # If cipher is unknown
+    if Ciphers.unknown in state["suspected_ciphers"]:  # If cipher is unknown
         return END
 
     return DECRYPTOR
