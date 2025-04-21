@@ -48,7 +48,7 @@ class BruteForceDecryptor:
         decrypted = ''.join(atbash_map.get(char.upper(), char) for char in cipher_text)
         word_count = sum(1 for word in decrypted.split() if word.lower() in english_words)
 
-        return decrypted, word_count
+        return decrypted
 
     @staticmethod
     def _modinv(a, m):
@@ -102,7 +102,9 @@ class BruteForceDecryptor:
             chunk = chunks[i:i+5]
             decrypted += bacon_map.get(chunk, "?")
 
-        return decrypted
+        import wordninja
+        spaced = " ".join(wordninja.split(decrypted))
+        return spaced
     
     @staticmethod
     def transposition_brute_force(cipher_text):
